@@ -5,7 +5,7 @@ import { formatDate } from '../lib/utils.js';
 
 export default function VolunteerDashboard() {
   const { user } = useAuth();
-  const { donations, updateDonationStatus } = useDonations();
+  const { donations, updateDonationStatus, isLoading } = useDonations();
 
   const availableDonations = donations.filter(d => d.status === 'AVAILABLE');
   const myPickups = donations.filter(d => d.volunteerId === user?.id);
@@ -27,6 +27,18 @@ export default function VolunteerDashboard() {
       alert('Failed to mark as collected.');
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="rounded-3xl border border-gray-200 bg-white p-12 shadow-sm text-center">
+          <div className="mx-auto mb-6 h-12 w-12 rounded-full border-4 border-green-500 border-t-transparent animate-spin" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Loading pickups...</h1>
+          <p className="text-gray-500">Fetching available donations and your pickup list.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

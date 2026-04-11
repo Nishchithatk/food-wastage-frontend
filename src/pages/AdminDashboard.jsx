@@ -28,6 +28,8 @@ export default function AdminDashboard() {
     loadData();
   }, [loadData]);
 
+  const isLoading = isRefreshing && users.length === 0 && donations.length === 0;
+
   const handleUserStatus = async (userId, status) => {
     try {
       await adminService.updateUserStatus(userId, status);
@@ -48,6 +50,18 @@ export default function AdminDashboard() {
     { label: 'Total Donations', value: donations.length, icon: Package, color: 'text-orange-600', bg: 'bg-orange-50' },
     { label: 'Active Pickups', value: donations.filter(d => d.status === 'ACCEPTED').length, icon: Activity, color: 'text-purple-600', bg: 'bg-purple-50' },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="rounded-3xl border border-gray-200 bg-white p-12 shadow-sm text-center">
+          <div className="mx-auto mb-6 h-12 w-12 rounded-full border-4 border-green-500 border-t-transparent animate-spin" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Loading dashboard...</h1>
+          <p className="text-gray-500">Fetching users and donation data.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

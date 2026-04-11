@@ -6,7 +6,7 @@ import { formatDate } from '../lib/utils.js';
 
 export default function DonorDashboard() {
   const { user } = useAuth();
-  const { donations, addDonation, deleteDonation } = useDonations();
+  const { donations, addDonation, deleteDonation, isLoading } = useDonations();
   const [isAdding, setIsAdding] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -18,6 +18,18 @@ export default function DonorDashboard() {
   });
 
   const myDonations = donations.filter(d => d.donorId === user?.id);
+
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="rounded-3xl border border-gray-200 bg-white p-12 shadow-sm text-center">
+          <div className="mx-auto mb-6 h-12 w-12 rounded-full border-4 border-green-500 border-t-transparent animate-spin" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Loading donations...</h1>
+          <p className="text-gray-500">Please wait while we load your donation list.</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
