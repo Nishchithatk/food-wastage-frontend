@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL, // ✅ must be set
   headers: {
     'Content-Type': 'application/json',
   },
@@ -10,11 +10,11 @@ const api = axios.create({
 // Auth Services
 export const authService = {
   login: async (email, role) => {
-    const response = await api.post('/auth/login', { email, role });
+    const response = await api.post('/api/auth/login', { email, role });
     return response.data;
   },
   register: async (name, email, role) => {
-    const response = await api.post('/auth/register', { name, email, role });
+    const response = await api.post('/api/auth/register', { name, email, role });
     return response.data;
   },
 };
@@ -22,19 +22,23 @@ export const authService = {
 // Donation Services
 export const donationService = {
   getAll: async () => {
-    const response = await api.get('/donations');
+    const response = await api.get('/api/donations');
     return response.data;
   },
   create: async (donationData) => {
-    const response = await api.post('/donations', donationData);
+    const response = await api.post('/api/donations', donationData);
     return response.data;
   },
   updateStatus: async (id, status, volunteerId, volunteerName) => {
-    const response = await api.put(`/donations/${id}/status`, { status, volunteerId, volunteerName });
+    const response = await api.put(`/api/donations/${id}/status`, {
+      status,
+      volunteerId,
+      volunteerName,
+    });
     return response.data;
   },
   delete: async (id) => {
-    const response = await api.delete(`/donations/${id}`);
+    const response = await api.delete(`/api/donations/${id}`);
     return response.data;
   },
 };
@@ -42,11 +46,11 @@ export const donationService = {
 // Admin Services
 export const adminService = {
   getUsers: async () => {
-    const response = await api.get('/admin/users');
+    const response = await api.get('/api/admin/users');
     return response.data;
   },
   updateUserStatus: async (userId, status) => {
-    const response = await api.put(`/admin/users/${userId}/status`, { status });
+    const response = await api.put(`/api/admin/users/${userId}/status`, { status });
     return response.data;
   },
 };
