@@ -9,7 +9,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
-              Reducing Waste, <span className="text-green-600">Feeding Hope.</span>
+              Reducing Waste <span className="text-green-600">Feeding Hope.</span>
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-gray-600 mb-10">
               FoodBridge connects surplus food from donors to volunteers who deliver it to those in need. Join our mission to end hunger and reduce food wastage.
